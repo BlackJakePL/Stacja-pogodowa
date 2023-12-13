@@ -1,0 +1,14 @@
+{
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "bootstrap": "^5.0.1",
+    "jquery": "^3.6.0",
+    "js-datepicker": "^5.18.0"
+  },
+  "devDependencies": {
+    "electron": "^13.1.1"
+  }
+}

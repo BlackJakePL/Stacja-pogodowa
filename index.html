@@ -1,0 +1,239 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+   
+    <title>Aplikacja pogodowa</title>
+    <!-- <link rel="stylesheet" href="../scss/index.scss">
+    <link rel="stylesheet" href="../bootstrap.min.css"> -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script scr="js/bootstrap.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+ 
+  </head>
+  <body>
+    
+    <div class="jumbotron">
+      <h1 class="display-1">Aplickacja pogodowa</h1>
+      <table class="table">
+        <tr>
+          <th> Temperatura</th>
+          <td id=""><span id="temp"></span> 	&#x2103;</td>
+        </tr>
+        <tr>
+          <th> Wysokosc n.p.m</th>
+          <td id=""><span id="rwysokosc"></span> m</td>
+        </tr>
+        <tr>
+          <th> Wilgotnosc</th>
+          <td id=""><span id="wilgotnosc"></span> %</td>
+        </tr>
+        <tr>
+          <th> Cisnienie</th>
+          <td id=""><span id="cisnienie"></span> hPa</td>
+        </tr>
+      </table>
+
+      <div class="container">
+        <div class="row">
+          <div id="Temperatura" class="col-md-6" style="height: 370px; width:100%;"></div>
+          <br>
+          
+          <div id="Wysokosc" class="col-md-6" style="height: 370px; width:100%;"></div>
+          <br>
+        </div>
+        <div class="row">
+          <div id="Wilgotnosc" class="col-md-6" style="height: 370px; width:100%;"></div>
+          <br>
+          <div id="Cisnienie" class="col-md-6" style="height: 370px; width:100%;"></div>
+        </div>
+      </div>
+    </div>
+<script>
+         $( "#rwysokosc" ).text(data.rwysokosc);
+        var dps = []; 
+        var chart = new CanvasJS.Chart("Wysokosc", {
+          title :{
+            text: "Wysokosc n.p.m"
+          },
+          data: [{
+            type: "line",
+            dataPoints: dps
+          }]
+        });
+
+        $( "#temp" ).text(data.temp);
+          var dps = []; 
+        var chart = new CanvasJS.Chart("Temperatura", {
+          title :{
+            text: "Temperatura"
+          },
+          data: [{
+            type: "line",
+            dataPoints: dps
+          }]
+        });
+
+        
+        $( "#wilgotnosc" ).text(data.wilgotnosc);
+        var dps = [];
+        var chart = new CanvasJS.Chart("Wilgotnosc", {
+          title :{
+            text: "Wilgotnosc"
+          },
+          data: [{
+            type: "line",
+            dataPoints: dps
+          }]
+        });
+
+        $( "#cisnienie" ).text(data.cisnienie);
+        var dps = []; 
+        var chart = new CanvasJS.Chart("Cisnienie", {
+          title :{
+            text: "Cisnienie"
+          },
+          data: [{
+            type: "line",
+            dataPoints: dps
+          }]
+        });
+        
+    $(document).ready(function(){
+        $.getJSON("data_file.json", function(data){
+
+        var xVal = 0;
+        var yVal = 100; 
+        var updateInterval = 1000;
+        var dataLength = 10; 
+        
+        var updateChart = function (count) {
+        
+          count = count || 1;
+        
+          for (var j = 0; j < count; j++) {
+            yVal = data.temp;
+            dps.push({
+              x: xVal,
+              y: yVal
+            });
+            xVal++;
+          }
+        
+          if (dps.length > dataLength) {
+            dps.shift();
+          }
+        
+          chart.render();
+        };
+        
+        updateChart(dataLength);
+        setInterval(function(){updateChart()}, updateInterval);
+
+
+
+        
+        var xVal = 0;
+        var yVal = 100; 
+        var updateInterval = 1000;
+        var dataLength = 10;
+        
+        var updateChart = function (count) {
+        
+          count = count || 1;
+        
+          for (var j = 0; j < count; j++) {
+            yVal = data.rwysokosc;
+            dps.push({
+              x: xVal,
+              y: yVal
+            });
+            xVal++;
+          }
+        
+          if (dps.length > dataLength) {
+            dps.shift();
+          }
+        
+          chart.render();
+        };
+        
+        updateChart(dataLength);
+        setInterval(function(){updateChart()}, updateInterval);
+
+        
+        var xVal = 0;
+        var yVal = 100; 
+        var updateInterval = 1000;
+        var dataLength = 10; 
+        
+        var updateChart = function (count) {
+        
+          count = count || 1;
+        
+          for (var j = 0; j < count; j++) {
+            yVal = data.wilgotnosc;
+            dps.push({
+              x: xVal,
+              y: yVal
+            });
+            xVal++;
+          }
+        
+          if (dps.length > dataLength) {
+            dps.shift();
+          }
+        
+          chart.render();
+        };
+        
+        updateChart(dataLength);
+        setInterval(function(){updateChart()}, updateInterval);
+
+
+        
+        var xVal = 0;
+        var yVal = 100; 
+        var updateInterval = 1000;
+        var dataLength = 10;
+        
+        var updateChart = function (count) {
+        
+          count = count || 1;
+        
+          for (var j = 0; j < count; j++) {
+            yVal = data.cisnienie;
+            dps.push({
+              x: xVal,
+              y: yVal
+            });
+            xVal++;
+          }
+        
+          if (dps.length > dataLength) {
+            dps.shift();
+          }
+        
+          chart.render();
+        };
+        
+        updateChart(dataLength);
+        setInterval(function(){updateChart()}, updateInterval);
+        }).fail(function(){
+            console.log("An error has occurred.");
+        });
+        
+
+  
+        setTimeout(arguments.callee, 1000);
+    });
+</script>
+<script>
+  
+  </script>
+  </body>
+</html>
